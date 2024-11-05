@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de IBAN Español</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+            margin-right: 10px;
+        }
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Validador de IBAN Español</h2>
+<input type="text" id="ibanInput" placeholder="Introduce el número IBAN" />
+<button onclick="validateIban()">Validar</button>
+<p id="result"></p>
+
+<script>
+    function validateIban() {
+        const iban = document.getElementById('ibanInput').value.trim();
+        const resultElement = document.getElementById('result');
+        const ibanPattern = /^ES\d{2}\d{20}$/; // Formato IBAN español
+        
+        // Validación de formato
+        if (!ibanPattern.test(iban)) {
+            resultElement.textContent = 'El IBAN debe empezar con "ES", seguido de 22 dígitos.';
+            resultElement.className = 'error';
+            return;
+        }
+
+        // Transformación del IBAN para la validación
+        const transformedIban = iban.slice(4) + '142800'; // Cambiar 'ES' a números
+        if (mod97(transformedIban) !== 1) {
+            resultElement.textContent = 'El IBAN es inválido (dígitos de control incorrectos).';
+            resultElement.className = 'error';
+            return;
+        }
+
+        resultElement.textContent = 'El IBAN es válido.';
+        resultElement.className = 'valid';
+    }
+
+    // Función para calcular el módulo 97
+    function mod97(iban) {
+        let remainder = iban;
+        while (remainder.length > 2) {
+            const block = remainder.slice(0, 9);
+            remainder = (parseInt(block, 10) % 97) + remainder.slice(block.length);
+        }
+        return parseInt(remainder, 10) % 97;
+    }
+</script>
+
+</body>
+</html>

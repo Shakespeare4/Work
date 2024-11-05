@@ -1,0 +1,47 @@
+
+<form>
+  <label for="fname">Nombre</label><br>
+  <input type="text" id="fname" name="fname"><br>
+  <label for="lname">DNI</label><br>
+  <input type="text" id="dni" name="dni" onchange="test_dni()">
+</form>
+
+<script>
+
+var k;
+var l;
+function test_dni()
+{
+
+correcto = 1;
+
+dni = document.getElementById("dni").value;
+
+var numberRegex = /^\d+$/;
+var reg = /^[a-z]+$/i;
+
+k = dni.substring(0,8);
+
+l = dni.substring(8,9);
+
+
+if(numberRegex.test(k))
+{
+if(reg.test(l)){
+
+correcto = 0;
+}
+}
+
+
+if(correcto==0){alert("DNI Correcto")}else{alert("DNI incorrecto");}
+
+
+
+}
+
+
+</script>
+
+
+<!TRWAGMYFPDXBNJZSQVHLCKE>

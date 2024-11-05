@@ -1,0 +1,7 @@
+<?php
+$v1=$_POST["fname"];
+$v2=$_POST["lname"];
+echo "First_Name: ",$v1;
+echo "<br>";
+echo "Last_Name: ",$v2;
+?>
